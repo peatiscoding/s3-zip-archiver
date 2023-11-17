@@ -7,6 +7,7 @@
 const { Upload } = require("@aws-sdk/lib-storage");
 const { S3 } = require("@aws-sdk/client-s3");
 const s3Zip = require('s3-zip')
+const {Readable} = require('stream')
 
 exports.handler = function (event, context) {
   console.log('event', event)
@@ -21,7 +22,8 @@ exports.handler = function (event, context) {
   // Create body stream
   try {
 
-    const body = s3Zip.archive({ region: region, bucket: bucket}, folder, files)
+    const writable = s3Zip.archive({ region: region, bucket: bucket}, folder, files)
+    const body = Readable.from(writable)
     const zipParams = { params: { Bucket: bucket, Key: folder + zipFileName } }
     const zipFile = new S3(zipParams)
     new Upload({
@@ -29,15 +31,16 @@ exports.handler = function (event, context) {
       params: { Body: body }
     })
       .on('httpUploadProgress', function (evt) { console.log(evt) })
-      .send(function (e, r) { 
-        if (e) {
-          const err = 'zipFile.upload error ' + e
-          console.log(err)         
+      .done().then(
+        (r) => {
+          console.log(r)
+          context.succeed(r)
+        }
+        (e) => {
+          console.log('zipFile.upload error', e)
           context.fail(err)
-        } 
-        console.log(r) 
-        context.succeed(r)
-      })
+        }
+      )
 
   } catch (e) {
     const err = 'catched error: ' + e
