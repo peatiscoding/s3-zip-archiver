@@ -71,7 +71,12 @@ s3Zip.archiveStream = function (stream, filesS3, filesZip) {
     })
     .on('end', function () {
       self.debug && console.log('end -> finalize')
-      archive.finalize()
+      const result = self.onArchiverEndFn && self.onArchiverEndFn(archive)
+      if (typeof result?.then === 'function') {
+        result.then(() => archive.finalize())
+      } else {
+        archive.finalize()
+      }
     })
     .on('error', function (err) {
       archive.emit('error', err)
@@ -87,6 +92,14 @@ s3Zip.setFormat = function (format) {
 
 s3Zip.setArchiverOptions = function (archiverOpts) {
   this.archiverOpts = archiverOpts
+  return this
+}
+
+/**
+ * Callback to invoke with archiver as argument before it finalized the last bit
+ */
+s3Zip.setOnArchiverEnd = function (onArchiverEndFn) {
+  this.onArchiverEndFn = onArchiverEndFn
   return this
 }
 
