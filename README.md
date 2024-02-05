@@ -1,4 +1,6 @@
-# s3-zip-archiver
+# s3-zip-arch
+
+S3-Zip with access to Archiver object
 
 Originally forked from: [orangewise/s3-zip](https://github.com/orangewise/s3-zip)
 
@@ -12,7 +14,7 @@ Download selected files from an Amazon S3 bucket as a zip file.
 ## Install
 
 ```
-npm install s3-zip-archiver
+npm install s3-zip-arch
 ```
 
 
@@ -30,7 +32,7 @@ Refer to the [AWS SDK][aws-sdk-url] for authenticating to AWS prior to using thi
 
 const fs = require('fs')
 const join = require('path').join
-const s3Zip = require('s3-zip-archiver')
+const s3Zip = require('s3-zip-arch')
 
 const region = 'bucket-region'
 const bucket = 'name-of-s3-bucket'
@@ -40,7 +42,7 @@ const file2 = 'Image B.png'
 const file3 = 'Image C.png'
 const file4 = 'Image D.png'
 
-const output = fs.createWriteStream(join(__dirname, 'use-s3-zip-archiver.zip'))
+const output = fs.createWriteStream(join(__dirname, 'use-s3-zip-arch.zip'))
 
 s3Zip
   .archive({ region: region, bucket: bucket}, folder, [file1, file2, file3, file4])
@@ -66,7 +68,7 @@ s3Zip
 
 ### Zip files with AWS Lambda
 
-Example of s3-zip-archiver in combination with [AWS Lambda](aws_lambda.md).
+Example of s3-zip-arch in combination with [AWS Lambda](aws_lambda.md).
 
 
 ### Zip a whole bucket folder
@@ -77,7 +79,7 @@ const join = require('path').join
 const {
   S3Client
 } = require("@aws-sdk/client-s3")
-const s3Zip = require('s3-zip-archiver')
+const s3Zip = require('s3-zip-arch')
 const XmlStream = require('xml-stream')
 
 const region = 'bucket-region'
@@ -159,10 +161,10 @@ s3Zip.archive({ region: region, bucket: bucket }, folder, files, archiveFiles)
 
 ### Using with ExpressJS
 
-`s3-zip-archiver` works with any framework which leverages on NodeJS Streams including ExpressJS.
+`s3-zip-arch` works with any framework which leverages on NodeJS Streams including ExpressJS.
 
 ```javascript
-const s3Zip = require('s3-zip-archiver')
+const s3Zip = require('s3-zip-arch')
 
 app.get('/download', (req, res) => {
   s3Zip
@@ -175,7 +177,7 @@ Above should stream out the file in the response of the request.
 ### Customize it with access to Archiver 
 
 ```javascript
-const s3Zip = require('s3-zip-archiver')
+const s3Zip = require('s3-zip-arch')
 
 s3Zip
   .setOnArchciverEnd(async (archiver) => {
@@ -209,13 +211,8 @@ If you would like a more fancy coverage report:
 npm run coverage
 ```
 
-
-
-
 [aws-sdk-url]: https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/configuring-the-jssdk.html
-[npm-badge]: https://badge.fury.io/js/s3-zip-archiver.svg
-[npm-url]: https://badge.fury.io/js/s3-zip-archiver
-[coveralls-badge]: https://coveralls.io/repos/github/orangewise/s3-zip-archiver/badge.svg?branch=master
-[coveralls-url]: https://coveralls.io/github/orangewise/s3-zip-archiver?branch=master
+[npm-badge]: https://badge.fury.io/js/s3-zip-arch.svg
+[npm-url]: https://badge.fury.io/js/s3-zip-arch
 [archiver-url]: https://www.npmjs.com/package/archiver
 [entrydata-url]: https://archiverjs.com/docs/global.html#EntryData

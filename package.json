@@ -1,5 +1,5 @@
 {
-  "name": "s3-zip-archiver",
+  "name": "s3-zip-arch",
   "version": "3.3.1",
   "description": "Download selected files from an Amazon S3 bucket as a zip file. + access to achiver object upon completion",
   "main": "s3-zip.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/peatiscoding/s3-zip-archiver.git"
+    "url": "https://github.com/peatiscoding/s3-zip-arch.git"
   },
   "keywords": [
     "amazon",
@@ -18,12 +18,12 @@
     "zip",
     "files"
   ],
-  "author": "Ronald Luitwieler",
+  "author": "Kittiphat Srilomsak",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/peatiscoding/s3-zip-archiver/issues"
+    "url": "https://github.com/peatiscoding/s3-zip-arch/issues"
   },
-  "homepage": "https://github.com/peatiscoding/s3-zip-archiver#readme",
+  "homepage": "https://github.com/peatiscoding/s3-zip-arch#readme",
   "dependencies": {
     "archiver": "^6.0.1",
     "s3-files": "^3.0.0"

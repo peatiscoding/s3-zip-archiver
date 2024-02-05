@@ -70,11 +70,15 @@ s3Zip.archiveStream = function (stream, filesS3, filesZip) {
       }
     })
     .on('end', function () {
-      self.debug && console.log('end -> finalize')
       const result = self.onArchiverEndFn && self.onArchiverEndFn(archive)
       if (typeof result?.then === 'function') {
-        result.then(() => archive.finalize())
+        self.debug && console.log('end -> archiverEndFn')
+        result.then(() => {
+          self.debug && console.log('end -> archiverEndFn -> finalize')
+          archive.finalize()
+        })
       } else {
+        self.debug && console.log('end -> finalize')
         archive.finalize()
       }
     })
